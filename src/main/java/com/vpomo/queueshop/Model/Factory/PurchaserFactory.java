@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.vpomo.queueshop.Model.Factory;
+package com.vpomo.queueshop.Model.Factory;
 
 /**
  *
  * @author Помогалов
  */
-import main.java.com.vpomo.queueshop.Model.DAO.PurchaserDAOImpl;
-import main.java.com.vpomo.queueshop.Model.DAO.PurchaserDAO;
+import com.vpomo.queueshop.Model.DAO.PurchaserDAOImpl;
+import com.vpomo.queueshop.Model.DAO.PurchaserDAO;
 
 
 public class PurchaserFactory {

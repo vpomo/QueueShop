@@ -1,7 +1,7 @@
-package main.java.com.vpomo.queueshop.Controller;
+package com.vpomo.queueshop.Controller;
 
 import com.vpomo.queueshop.Model.Entity.Purchaser;
-import main.java.com.vpomo.queueshop.Model.Factory.PurchaserFactory;
+import com.vpomo.queueshop.Model.Factory.PurchaserFactory;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.vpomo.queueshop.Controller;
+package com.vpomo.queueshop.Controller;
 
 import com.vpomo.queueshop.Model.Entity.Purchaser;
-import main.java.com.vpomo.queueshop.Model.Factory.PurchaserFactory;
+import com.vpomo.queueshop.Model.Factory.PurchaserFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;

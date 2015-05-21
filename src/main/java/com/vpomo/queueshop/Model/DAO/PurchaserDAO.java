@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.vpomo.queueshop.Model.DAO;
+package com.vpomo.queueshop.Model.DAO;
 
 import com.vpomo.queueshop.Model.Entity.Purchaser;
 import java.util.Date;
