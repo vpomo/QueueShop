@@ -1,0 +1,59 @@
+#logo{
+    background: #ffffcc;
+border: 1px solid #40658d;
+border-radius: 10px;
+//position:absolute;
+//position:relative;
+text-align:center;
+width: 600px;
+
+left: 20px;
+top:10px;
+}
+#descr{
+    background: #ccffcc;
+border: 1px solid #40658d;
+border-radius: 15px;
+//position:absolute;
+//position:relative;
+font-style:normal;
+text-decoration:none;
+font-family:Calibri, sans-serif;
+text-align:center;
+left: 30px;
+top:280px;
+
+width: 600px;
+//height: 200px;
+
+
+}
+
+#inpval{
+background: #80abdb;
+border: 1px solid #40658d;
+border-radius: 5px;
+//position:relative;
+//position:absolute;
+left: 20px;
+top:260px;
+width: 400px;
+
+}
+
+#notif{
+background: #ff9999;
+border: 1px solid #40658d;
+border-radius: 15px;
+//position:absolute;
+//position:relative;
+font-style:normal;
+text-decoration:none;
+font-family:Calibri, sans-serif;
+text-align:center;
+left: 30px;
+top:280px;
+
+width: 600px;
+//height: 200px;
+}
