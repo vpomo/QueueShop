@@ -26,7 +26,7 @@ var imgwoman=document.getElementById("image3");
 var imgchild=document.getElementById("image4");
 
 
-var canvas=document.getElementById("draw")
+var canvas=document.getElementById("draw");
 var x=canvas.getContext("2d");
 x.font='10px Verdana';
 x.fillStyle='#60016d';

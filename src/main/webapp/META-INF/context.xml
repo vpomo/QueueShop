@@ -1,4 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context docBase="hibernate" path="/queueshop">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="30" maxIdle="10" maxWait="10000" name="jdbc/queueshop" password="rfhnjafy" type="javax.sql.DataSource" url="jdbc:mysql://10.14.2.4/queueshop" username="root"/>
-</Context>
+<Context antiJARLocking="true" path="/queueshop"/>
