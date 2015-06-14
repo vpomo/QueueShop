@@ -153,6 +153,7 @@ public class JpaPurchaserRepositoryImpl implements PurchaserRepository {
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Purchaser> currentStepQueue(int currentStep, int cashBox) {
         String strCurrentStep = Integer.toString(currentStep);
 
@@ -162,15 +163,16 @@ public class JpaPurchaserRepositoryImpl implements PurchaserRepository {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public String currentStepQueueFirst(int id, int currentStep) {
         String strCurrentStep = Integer.toString(currentStep);
         String firstPurchaser = "no";
 
         Query query = this.entityManager.createQuery("SELECT p FROM Purchaser p WHERE p.id = :id AND p.step" + strCurrentStep + " > 1000");
         query.setParameter("id", id);
-        List<Purchaser> resultlist = query.getResultList();
+        List<Purchaser> resultList = query.getResultList();
 
-        if (resultlist.size() > 0) {
+        if (resultList.size() > 0) {
             firstPurchaser = "yes";
         }
 

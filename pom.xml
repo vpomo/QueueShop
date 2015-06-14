@@ -305,7 +305,16 @@
 			<artifactId>datatables-export-itext</artifactId>
 			<version>${dandelion.version}</version>
 		</dependency>
-	</dependencies>
+
+	<dependency>
+        	<groupId>c3p0</groupId>
+		<artifactId>c3p0</artifactId>
+        	<version>0.9.1.2</version>
+        	<type>jar</type>
+        	<scope>compile</scope>
+    	</dependency>
+
+   </dependencies>
 
 
 	<!-- Maven plugin versions are mentioned in order to guarantee the build reproducibility in the long term -->

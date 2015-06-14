@@ -21,10 +21,6 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>TestServlet</servlet-name>
-        <servlet-class>com.vpomo.queueshop.web.TestServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>queueshop</servlet-name>
         <url-pattern>/</url-pattern>
@@ -54,10 +50,6 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <servlet-mapping>
-        <servlet-name>TestServlet</servlet-name>
-        <url-pattern>/testservlet</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

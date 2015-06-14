@@ -16,7 +16,7 @@
         </header>
 <br>
 <br>
-<form method="POST" action="${pageContext.request.contextPath}/CreateModel">
+<form method="POST" action="${pageContext.request.contextPath}/createmodel">
     <div id="descr">
     <p> Данная программа позволяет произвести моделирование работы кассового обслуживания  в магазине.
         Пожалуйста введите первоначальные параметры и нажмите кнопку "Запуск моделирования ...".
