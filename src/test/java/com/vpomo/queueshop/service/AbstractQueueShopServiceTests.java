@@ -1,16 +1,12 @@
 package com.vpomo.queueshop.service;
 
 import com.vpomo.queueshop.model.Purchaser;
-import com.vpomo.queueshop.repository.jpa.JpaPurchaserRepositoryImpl;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import org.junit.After;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +56,7 @@ public abstract class AbstractQueueShopServiceTests {
     
     @Test
     public void testCreate() {
-        System.out.println(" ==== Test create() started ==== ");
+        System.out.println(" ==== Test create(typePurchaser, cashBox, quantityGoods, waitCashbox) started ==== ");
         Purchaser createdPurchaser = null;
 
         int typePurchaser = 100;
@@ -75,6 +71,48 @@ public abstract class AbstractQueueShopServiceTests {
         assertThat(createdPurchaser.getWaitCashbox()).isEqualTo(100);
         
         System.out.println(" ==== Test create() passed ==== ");
+    }
+    
+    @Test
+    public void testUpdateStep() {
+        System.out.println(" ==== Test updateStep(currentPurchaser, currentStep, currPartQueue) ==== ");
+        int currentStep = 2;
+        int currPartQueue = 90;
+        assertThat(purchaser.getStep2()).isEqualTo(0);
+        this.queueShopService.updateStepPurchaser(purchaser, currentStep, currPartQueue);
+        assertThat(purchaser.getStep2()).isEqualTo(90);
+        System.out.println(" ==== Test updateStep() passed ==== ");
+    }
+
+    @Test
+    public void testCurrentStepQueue() {
+        System.out.println(" ==== Test currentStepQueue(currentStep, cashBox) ==== ");
+        int currentStep = 3;
+        int cashBox = 0;
+        List<Purchaser> result = this.queueShopService.currentStepQueue(currentStep, cashBox);
+        assertThat(result.contains(purchaser)).isFalse();
+
+        this.queueShopService.updateStepPurchaser(purchaser, 3, 3);
+        result = this.queueShopService.currentStepQueue(currentStep, cashBox);
+        assertThat(result.contains(purchaser)).isTrue();
+        System.out.println(" ==== Test currentStepQueue() passed ==== ");
+    }
+    
+    @Test
+    public void testCurrentStepQueueFirst() {
+        System.out.println(" ==== Test currentStepQueueFirst(id, currentStep) ==== ");
+        int id = idPurshaser;
+        int currentStep = 4;
+        String expResult = "no";
+        String result = this.queueShopService.currentStepQueueFirst(id, currentStep);
+        assertEquals(expResult, result);
+        
+        this.queueShopService.updateStepPurchaser(purchaser, currentStep, 1003);
+        result = this.queueShopService.currentStepQueueFirst(id, currentStep);
+        expResult = "yes";
+        assertEquals(expResult, result);
+        
+        System.out.println(" ==== Test currentStepQueueFirst() passed ==== ");
     }
     
 }

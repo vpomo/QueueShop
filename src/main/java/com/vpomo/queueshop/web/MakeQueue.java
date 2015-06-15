@@ -2,7 +2,6 @@ package com.vpomo.queueshop.web;
 
 import com.vpomo.queueshop.model.Purchaser;
 import com.vpomo.queueshop.service.QueueShopService;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Random;
@@ -319,17 +318,17 @@ public class MakeQueue {
     }
 
     private Integer testErrorInputForm(Integer numStep, Integer numberCashboxs, Integer powerCashboxs) {
-        Integer errortest = 0;
+        Integer errorTest = 0;
         if ((numStep > 30) | (numStep < 2)) {
-            errortest = 1;
+            errorTest = 1;
         }
         if ((numberCashboxs > 4) | (numberCashboxs < 1)) {
-            errortest = 2;
+            errorTest = 2;
         }
         if ((powerCashboxs > 5) | (powerCashboxs < 2)) {
-            errortest = 3;
+            errorTest = 3;
         }
-        return errortest;
+        return errorTest;
     }
 
 }
