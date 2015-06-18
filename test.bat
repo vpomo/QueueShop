@@ -1,1 +1,0 @@
-mvn -P=systest test

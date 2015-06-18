@@ -6,8 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.dao.DataAccessException;
+
+/**
+ * Mostly used as a facade for all QueueShop controllers
+ * Also a placeholder for @Transactional annotations
+ *
+ * @author Pomogalov Vladimir
+ */
 
 @Service
 //@Transactional(propagation = Propagation.REQUIRED, timeout = 60)
@@ -61,4 +67,10 @@ private final PurchaserRepository purchaserRepository;
         return purchaserRepository.currentStepQueueFirst(id, currentStep);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Integer getValueStepByIdPurchaser(int idPurchaser, int currentStep)  throws DataAccessException {
+        return purchaserRepository.getValueStepByIdPurchaser(idPurchaser, currentStep);
+    }
+    
 }

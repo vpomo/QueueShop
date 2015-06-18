@@ -1,4 +1,3 @@
-
 /**
  *
  * The classes in this package represent the JPA implementation

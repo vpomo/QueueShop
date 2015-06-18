@@ -7,10 +7,16 @@ import org.junit.After;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Here are the methods for testing data features
+ *
+ * @author Pomogalov Vladimir
+ */
+
 
 public abstract class AbstractQueueShopServiceTests {
 
@@ -78,9 +84,12 @@ public abstract class AbstractQueueShopServiceTests {
         System.out.println(" ==== Test updateStep(currentPurchaser, currentStep, currPartQueue) ==== ");
         int currentStep = 2;
         int currPartQueue = 90;
-        assertThat(purchaser.getStep2()).isEqualTo(0);
+        assertThat(this.queueShopService.getValueStepByIdPurchaser(idPurshaser, currentStep)).isEqualTo(0);
         this.queueShopService.updateStepPurchaser(purchaser, currentStep, currPartQueue);
-        assertThat(purchaser.getStep2()).isEqualTo(90);
+        assertThat(this.queueShopService.getValueStepByIdPurchaser(idPurshaser, currentStep)).isEqualTo(90);
+        currPartQueue = currPartQueue + 30;
+        this.queueShopService.updateStepPurchaser(purchaser, currentStep, currPartQueue);
+        assertThat(this.queueShopService.getValueStepByIdPurchaser(idPurshaser, currentStep)).isEqualTo(210);
         System.out.println(" ==== Test updateStep() passed ==== ");
     }
 

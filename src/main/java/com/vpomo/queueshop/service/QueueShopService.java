@@ -4,6 +4,12 @@ import com.vpomo.queueshop.model.Purchaser;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
+/**
+ * Mostly used as a facade so all controllers have a single point of entry
+ *
+ * @author Pomogalov Vladimir
+ */
+
 public interface QueueShopService {
 
     public void removePurchaser(int id) throws DataAccessException;
@@ -13,5 +19,6 @@ public interface QueueShopService {
     public void updateStepPurchaser(Purchaser currentPurchaser, int currentStep, int currPartQueue) throws DataAccessException;
     public List<Purchaser> currentStepQueue(int currentStep, int cashBox)  throws DataAccessException;
     public String currentStepQueueFirst(int id, int currentStep)  throws DataAccessException;   
+    public Integer getValueStepByIdPurchaser(int idPurchaser, int currentStep) throws DataAccessException;
             
 }

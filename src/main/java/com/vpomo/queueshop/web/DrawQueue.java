@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.vpomo.queueshop.web;
 
 import com.vpomo.queueshop.model.Purchaser;
@@ -22,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Here are techniques for graphical representation of the queues in the shop
  *
- * @author Альбина
+ * @author Pomogalov Vladimir
  */
 @Controller
 public class DrawQueue {
@@ -45,7 +41,6 @@ public class DrawQueue {
     public void draw(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //numSteps = (Integer) getServletContext().getAttribute("numSteps");
         String pressButton = "no";
 
         List<Purchaser> resultPurchaser = null;
@@ -99,8 +94,6 @@ public class DrawQueue {
             }
 
             int k = currentStep;
-
-            logger.info("VVVVVVVVVVVVVVVVVVVVVVVVVVV=");
 
             out.println("<p> Шаг № " + k + "</p>");
             out.println("<canvas id='draw' width='600' height='400' style='border:1px solid;'></canvas>");

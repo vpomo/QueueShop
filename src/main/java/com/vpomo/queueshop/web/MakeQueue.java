@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Handles requests for the application home page.
+ * Here are the methods for constructing a model of queues in the shop
+ *
+ * @author Pomogalov Vladimir
  */
 @Controller
 public class MakeQueue {
@@ -34,17 +34,16 @@ public class MakeQueue {
     public ArrayList<Purchaser> queueCashbox2 = new ArrayList<>();
     public ArrayList<Purchaser> queueCashbox3 = new ArrayList<>();
     public ArrayList<Purchaser> queueCashbox4 = new ArrayList<>();
-//– число шагов работы магазина
-    public Integer numSteps = 10;
-//– число касс, обслуживающих покупателей
-    public Integer numberCashbox = 3;
-//– производительность кассы
+    //– число шагов работы магазина
+    public Integer numSteps = 30;
+    //– число касс, обслуживающих покупателей
+    public Integer numberCashbox = 4;
+    //– производительность кассы
     public Integer powerCashbox = 3;
 
     /**
      * Simply selects the home view to render by returning its name.
      *
-     * @param principal
      * @param model
      * @return
      */
@@ -65,6 +64,7 @@ public class MakeQueue {
         Integer typePurchaser = 4;
         Integer quantityGoods = 0, cashBox = 0, waitCashbox = 0;
 
+        // - Получаем параметры работы модели
         Enumeration<String> parameters = request.getParameterNames();
         while (parameters.hasMoreElements()) {
             String parameter = parameters.nextElement();
@@ -85,27 +85,26 @@ public class MakeQueue {
             model.addAttribute("notif", "Ошибка ввода!!! Пожалуйста, повторите ввод исходных данных для построения модели");
             return "/error";
         }
-
-        queueCashbox1.clear();
-        queueCashbox1.trimToSize();
-        queueCashbox2.clear();
-        queueCashbox2.trimToSize();
-        queueCashbox3.clear();
-        queueCashbox3.trimToSize();
-        queueCashbox4.clear();
-        queueCashbox4.trimToSize();
-
+        
+        // - Очищаем очереди в кассу
+        clearQueueCashbox();
+        // - Очищаем базу данных
         this.queueShopService.clearAllPurchaser();
 
+        // - Главный цикл построения модели
         for (int step = 1; step < numSteps + 1; step++) {
+            // - Генерация случайного покупателя
             typePurchaser = rand.nextInt(3);
+            // - Генерация корзины с покупками
             quantityGoods = 1 + rand.nextInt(20);
 
+            // - Вычисляем число циклов ожидания у кассы
             waitCashbox = (int) Math.floor(quantityGoods / powerCashbox);
             if (quantityGoods % powerCashbox > 0) {
                 waitCashbox = waitCashbox + 1;
             }
 
+            // - В зависимости от типа покупателя выбираем в какую очередь встать
             switch (typePurchaser) {
                 case 0:
                     cashBox = manAnalysisQueue();
@@ -116,12 +115,10 @@ public class MakeQueue {
                 case 2:
                     cashBox = childAnalysisQueue();
                     break;
-                default:
-                    //оператор;
-                    break;
             }
-
+            // - Записываем покупателя в базу данных
             currentPurchaser = this.queueShopService.createPurchaser(typePurchaser, cashBox, quantityGoods, waitCashbox - 1);
+            // - Ставим нового покупателя в очередь у кассы
             switch (cashBox) {
                 case 1:
                     queueCashbox1.add(currentPurchaser);
@@ -139,24 +136,16 @@ public class MakeQueue {
                     queueCashbox4.add(currentPurchaser);
                     this.queueShopService.updateStepPurchaser(currentPurchaser, step, 1000);
                     break;
-                default:
-                    //оператор;
-                    break;
             }
 
-            logger.info("typePurchaser=" + typePurchaser + " cashBox=" + cashBox + " quantityGoods=" + quantityGoods + " waitCashbox=" + waitCashbox);
-
-//PurchaserFactory.getPurchaserInstance().getPurchaserDAO().UpdateStepPurchaserId(currentPurchaser.getId(), 4, 1);
-            logger.info("queue #1");
+            // - Продвигаем покупателей во всех очередях
             orderingQueue(1, step);
-            logger.info("queue #2");
             orderingQueue(2, step);
-            logger.info("queue #3");
             orderingQueue(3, step);
-            logger.info("queue #4");
             orderingQueue(4, step);
 
         }   //for step         
+
         model.addAttribute("numSteps", numSteps);
         return "/drawstep";
     }
@@ -168,6 +157,17 @@ public class MakeQueue {
         return "/drawstep";
     }
 
+    private void clearQueueCashbox() {
+        queueCashbox1.clear();
+        queueCashbox1.trimToSize();
+        queueCashbox2.clear();
+        queueCashbox2.trimToSize();
+        queueCashbox3.clear();
+        queueCashbox3.trimToSize();
+        queueCashbox4.clear();
+        queueCashbox4.trimToSize();
+    }
+    
     private void orderingQueue(int cashbox, int currentStep) {
         Integer lengthQueue1 = 0, waitQueue1 = 0, lengthQueue2 = 0, waitQueue2 = 0,
                 lengthQueue3 = 0, waitQueue3 = 0, lengthQueue4 = 0, waitQueue4 = 0;
@@ -190,7 +190,6 @@ public class MakeQueue {
                     if (waitQueue1 == 0) {
                         pur = queueCashbox1.remove(0);
                     }
-
                 }
                 break;
             case 2:
@@ -251,13 +250,10 @@ public class MakeQueue {
                     }
                 }
                 break;
-            default:
-                //оператор;
-                break;
         }
-
     }
 
+    // - Покупатель-мужчина анализирует в какую очередь ему встать
     private Integer manAnalysisQueue() {
         Integer lengthQueue1 = queueCashbox1.size(), sumWaitCashbox1 = 0, lengthQueue2 = queueCashbox2.size(), sumWaitCashbox2 = 0,
                 lengthQueue3 = queueCashbox3.size(), sumWaitCashbox3 = 0, lengthQueue4 = queueCashbox4.size(), sumWaitCashbox4 = 0;
@@ -296,6 +292,7 @@ public class MakeQueue {
         return numberQueue;
     }
 
+    // - Покупатель-женщина анализирует в какую очередь ему встать
     private Integer womanAnalysisQueue() {
         Integer lengthQueue1 = queueCashbox1.size(), lengthQueue2 = queueCashbox2.size(),
                 lengthQueue3 = queueCashbox3.size(), lengthQueue4 = queueCashbox4.size();
@@ -311,12 +308,14 @@ public class MakeQueue {
         return numberQueue;
     }
 
+    // - Покупатель-ребенок анализирует в какую очередь ему встать
     private Integer childAnalysisQueue() {
         Random randQueue = new Random();
         Integer numberQueue = 1 + randQueue.nextInt(numberCashbox);
         return numberQueue;
     }
 
+    // - Проверка введенных данных для расчета модели
     private Integer testErrorInputForm(Integer numStep, Integer numberCashboxs, Integer powerCashboxs) {
         Integer errorTest = 0;
         if ((numStep > 30) | (numStep < 2)) {
